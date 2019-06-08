@@ -1,0 +1,6 @@
+<div>
+  <input id="templateFormInput" [(ngModel)]="someText">
+  <div id="divValue">{{someText}}</div>
+
+  <button id="saveButton" [disabled]="!isValid()" (click)="onClick()">Click Me</button>
+</div>

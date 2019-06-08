@@ -26,13 +26,16 @@ describe('TemplateFormExampleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update template form value', () => {
+  it('should update template form value', async () => {
     const templateFormDebugElement = fixture.debugElement.query(By.css('#templateFormInput'));
 
     templateFormDebugElement.nativeElement.value = 'updated value';
     templateFormDebugElement.nativeElement.dispatchEvent(new Event('input'));
 
     fixture.detectChanges();
+    // while this example works without whenStable
+    // template forms are async, so there are occasions when you need it
+    await fixture.whenStable();
 
     const updatedDiv = fixture.debugElement.query(By.css('#divValue'));
     expect(updatedDiv.nativeElement.innerText).toBe('updated value');

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { ReactiveFormExampleComponent } from './reactive-form-example.component';
 
-fdescribe('ReactiveFormExampleComponent', () => {
+describe('ReactiveFormExampleComponent', () => {
   let component: ReactiveFormExampleComponent;
   let fixture: ComponentFixture<ReactiveFormExampleComponent>;
 

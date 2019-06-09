@@ -23,3 +23,11 @@ E2E is currently outside of the scope of this project. Perhaps a later version w
 ## Further help
 
 Feel free to use the Issues board if you need additional explanations or have additional examples you would like covered
+
+## Glossary
+
+### Basic Usage
+
+[Super basic template form example](./src/app/components/forms/template-form-example/template-form-example.component.spec.ts)
+
+[Super basic reactive form example](./src/app/components/forms/reactive-form-example/reactive-form-example.component.spec.ts)

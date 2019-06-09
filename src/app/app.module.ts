@@ -1,18 +1,26 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TemplateFormExampleComponent } from './components/forms/template-form-example/template-form-example.component';
+import { AddContactComponent } from './components/advanced/contacts/add-contact/add-contact.component';
+import { EditContactComponent } from './components/advanced/contacts/edit-contact/edit-contact.component';
+import { EnterContactComponent } from './components/advanced/contacts/enter-contact/enter-contact.component';
+import { SearchContactsComponent } from './components/advanced/contacts/search-contacts/search-contacts.component';
 import { ReactiveFormExampleComponent } from './components/forms/reactive-form-example/reactive-form-example.component';
+import { TemplateFormExampleComponent } from './components/forms/template-form-example/template-form-example.component';
+import { ContactService } from './services/contact.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     TemplateFormExampleComponent,
-    ReactiveFormExampleComponent
+    ReactiveFormExampleComponent,
+    SearchContactsComponent,
+    AddContactComponent,
+    EditContactComponent,
+    EnterContactComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +28,9 @@ import { ReactiveFormExampleComponent } from './components/forms/reactive-form-e
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    ContactService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

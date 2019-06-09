@@ -11,7 +11,9 @@ describe('TemplateFormExampleComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TemplateFormExampleComponent],
-      imports: [FormsModule],
+      imports: [
+        FormsModule // required for Template Forms
+      ],
     })
       .compileComponents();
   }));
@@ -26,12 +28,15 @@ describe('TemplateFormExampleComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  // making this method async to allus us to await fixture.whenStable
   it('should update template form value', async () => {
     const templateFormDebugElement = fixture.debugElement.query(By.css('#templateFormInput'));
 
     templateFormDebugElement.nativeElement.value = 'updated value';
+    // necessary to let the form know it has been changed
     templateFormDebugElement.nativeElement.dispatchEvent(new Event('input'));
 
+    // to see how the html has changed we need to detect changes
     fixture.detectChanges();
     // while this example works without whenStable
     // template forms are async, so there are occasions when you need it

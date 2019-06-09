@@ -28,10 +28,13 @@ describe('TemplateFormExampleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // making this method async to allus us to await fixture.whenStable
+  // making this method async to allow us to await fixture.whenStable
   it('should update template form value', async () => {
+    // this works because the id in the html is templateFormInput
+    // notice we put a # in front - which is a css syntax for id
     const templateFormDebugElement = fixture.debugElement.query(By.css('#templateFormInput'));
 
+    // set the value of the textbox in the html
     templateFormDebugElement.nativeElement.value = 'updated value';
     // necessary to let the form know it has been changed
     templateFormDebugElement.nativeElement.dispatchEvent(new Event('input'));

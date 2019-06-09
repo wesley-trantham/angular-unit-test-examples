@@ -1,3 +1,16 @@
-<p>
-  search-contacts works!
-</p>
+<div>
+  <div>
+    <button (click)="onAddContactClick()">Add Contact</button>
+  </div>
+  <input id="searchInputId" [formControl]="searchInput">
+
+  <div *ngIf="searchResults | async as searchResults; else loading">
+    <table id="resultsTableId">
+      <tr id="rowId-{{index}}" *ngFor="let contact of searchResults; let index">
+        <td>{{contact.firstName}}</td>
+        <td>{{contact.lastName}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<ng-template #loading>Loading...</ng-template>

@@ -1,7 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { AppComponent } from './app.component';
+import { SearchContactsComponent } from './components/advanced/contacts/search-contacts/search-contacts.component';
+
+const routes: Routes = [{
+  path: '',
+  component: AppComponent,
+}, {
+  path: 'contacts',
+  component: SearchContactsComponent,
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -48,5 +48,12 @@ export class ContactService {
 
     return contact;
   }
+
+  insertContact(contact: Contact): Observable<Contact> {
+    // usually you'd do an http call here
+
+    // delay of 1 second to make it act like a real call
+    return of(contact).pipe(delay(1000));
+  }
 }
 

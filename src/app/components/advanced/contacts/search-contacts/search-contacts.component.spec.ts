@@ -6,6 +6,7 @@ import { Contact } from 'src/app/models/contact.model';
 import { ContactService } from 'src/app/services/contact.service';
 
 import { SearchContactsComponent } from './search-contacts.component';
+import { Router } from '@angular/router';
 
 describe('SearchContactsComponent', () => {
   let component: SearchContactsComponent;
@@ -13,11 +14,16 @@ describe('SearchContactsComponent', () => {
   let mockContactServiceTemplate: ContactService;
   let mockContactService: ContactService;
   let searchResults: BehaviorSubject<Contact[]>;
+  let mockRouter: Router;
 
   beforeEach(async(() => {
     searchResults = new BehaviorSubject<Contact[]>([]);
+    // we will use a mock service so that we control behavior
+    // also we don't want changes to the real one to break this spec
+    // like if we added a new dependency
     mockContactServiceTemplate = jasmine.createSpyObj<ContactService>('contact service', ['searchContacts']);
-    // (mockContactServiceTemplate.searchContacts as jasmine.Spy).and.returnValue(searchResults);
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+
     TestBed.configureTestingModule({
       declarations: [SearchContactsComponent],
       imports: [
@@ -25,6 +31,7 @@ describe('SearchContactsComponent', () => {
       ],
       providers: [
         { provide: ContactService, useValue: mockContactServiceTemplate },
+        { provide: Router, useValue: mockRouter },
       ]
     })
       .compileComponents();

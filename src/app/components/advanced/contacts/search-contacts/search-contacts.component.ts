@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, startWith, switchMap } from 'rxjs/operators';
 import { Contact } from 'src/app/models/contact.model';
@@ -16,6 +17,7 @@ export class SearchContactsComponent implements OnInit {
 
   constructor(
     private contactService: ContactService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +36,8 @@ export class SearchContactsComponent implements OnInit {
       );
   }
 
-  onAddContactClick(): void {
+  onAddContactClick(): Promise<boolean> {
     // route to add contacts component
+    return this.router.navigate(['/contacts/add']);
   }
 }

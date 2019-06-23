@@ -63,7 +63,7 @@ export class ContactService {
 
   updateContact(contact: Contact): Observable<boolean> {
 
-    return of(true).pipe(delay(1000));
+      return of(true).pipe(delay(1000));
   }
 
   deleteContact(contactId: number): Observable<boolean> {

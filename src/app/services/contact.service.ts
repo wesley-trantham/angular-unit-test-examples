@@ -20,6 +20,11 @@ export class ContactService {
     return results;
   }
 
+  getContactById(id: number): Observable<Contact> {
+    const contact = this.getDefaultContacts[0];
+    return of(contact);
+  }
+
   constructor() { }
 
   getDefaultContacts(length: number): Contact[] {
@@ -54,6 +59,16 @@ export class ContactService {
 
     // delay of 1 second to make it act like a real call
     return of(contact).pipe(delay(1000));
+  }
+
+  updateContact(contact: Contact): Observable<boolean> {
+
+    return of(true).pipe(delay(1000));
+  }
+
+  deleteContact(contactId: number): Observable<boolean> {
+
+    return of(true).pipe(delay(1000));
   }
 }
 

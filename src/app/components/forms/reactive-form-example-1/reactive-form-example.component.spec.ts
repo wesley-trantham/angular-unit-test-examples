@@ -14,13 +14,13 @@ describe('ReactiveFormExampleComponent', () => {
       imports: [
         ReactiveFormsModule // since we're using Reactive Forms
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReactiveFormExampleComponent);
     component = fixture.componentInstance;
+    // the first detectChanges will call onInit in our component
     fixture.detectChanges();
   });
 
@@ -55,9 +55,6 @@ describe('ReactiveFormExampleComponent', () => {
     // detectChanges from html first, reactive forms are synchronous
     const checkValue = component.exampleForm.get('hasCheck').value;
 
-    // we can spy that a function was called on click
-    // a later example will have a more advanced test
-    const saveSpy = spyOn(component, 'onSaveClick');
     saveButtonElement.nativeElement.click();
 
     expect(beginningFormValidity).toBe(false);
@@ -65,6 +62,24 @@ describe('ReactiveFormExampleComponent', () => {
     expect(checkValue).toBe(true);
     expect(saveButtonDisabled).toBe(true);
     expect(saveButtonDisabledAfterUpdate).toBe(false);
-    expect(saveSpy).toHaveBeenCalled();
+    expect(component.savedValue.name).toBe('updated value');
+    expect(component.savedValue.hasCheck).toBe(true);
+  });
+
+  it('should not save when required field is empty', () => {
+    const saveButtonElement = fixture.debugElement.query(By.css('#saveButton'));
+    saveButtonElement.nativeElement.click();
+    expect(component.savedValue).toBeFalsy();
+  });
+
+  it('should have a bad test example', () => {
+    // setting the form directly
+    component.exampleForm.get('someName').setValue('updated value');
+    component.exampleForm.get('hasCheck').setValue(true);
+    // calling function directly
+    component.onSaveClick();
+    // we can assert the values on the object
+    expect(component.savedValue.name).toBe('updated value');
+    expect(component.savedValue.hasCheck).toBe(true);
   });
 });

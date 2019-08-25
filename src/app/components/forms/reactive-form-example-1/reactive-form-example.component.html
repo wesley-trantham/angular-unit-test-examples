@@ -1,7 +1,6 @@
 <form [formGroup]="exampleForm">
   <input id="someNameText" type="text" formControlName="someName">
   <input id="hasCheckBox" type="checkbox" formControlName="hasCheck">
-
 </form>
 
 <button id="saveButton" (click)="onSaveClick()" [disabled]="exampleForm.invalid">Save</button>

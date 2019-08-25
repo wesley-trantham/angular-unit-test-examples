@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ReactiveFormExampleComponent implements OnInit {
   exampleForm: FormGroup;
+  savedValue: any;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -25,8 +26,9 @@ export class ReactiveFormExampleComponent implements OnInit {
     // assign values,
     const values = {
       name: this.exampleForm.get('someName').value,
-      hasCheck : this.exampleForm.get('hasCheck').value,
+      hasCheck: this.exampleForm.get('hasCheck').value,
     };
     // save values
+    this.savedValue = values;
   }
 }

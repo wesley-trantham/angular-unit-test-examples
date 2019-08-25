@@ -30,4 +30,4 @@ Feel free to use the Issues board if you need additional explanations or have ad
 
 [Super basic template form example](./src/app/components/forms/template-form-example/template-form-example.component.spec.ts)
 
-[Super basic reactive form example](./src/app/components/forms/reactive-form-example/reactive-form-example.component.spec.ts)
+[Super basic reactive form example](./src/app/components/forms/reactive-form-example-1/reactive-form-example.component.spec.ts)

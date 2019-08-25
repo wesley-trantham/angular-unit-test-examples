@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
-import { ActivatedRouteStub } from 'src/app/mocks/activated-route-stub';
-import { MockEnterContactComponent } from 'src/app/mocks/mock-enter-contact-component';
+import { ActivatedRouteStub } from 'src/app/fakes/activated-route-stub';
+import { FakeEnterContactComponent } from 'src/app/fakes/fake-enter-contact-component';
 import { Contact } from 'src/app/models/contact.model';
 import { ContactService } from 'src/app/services/contact.service';
 
@@ -14,28 +14,29 @@ describe('EditContactComponent', () => {
   let fixture: ComponentFixture<EditContactComponent>;
   let mockRouter: Router;
   let activatedRoute: ActivatedRouteStub;
-  let mockContactService: ContactService;
+  let fakeContactService: ContactService;
+  const contactIdFromRoute = 12345;
 
   beforeEach(async(() => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     activatedRoute = new ActivatedRouteStub();
-    mockContactService = jasmine.createSpyObj<ContactService>('contact service', ['getContactById', 'updateContact', 'deleteContact']);
+    fakeContactService = jasmine.createSpyObj<ContactService>('contact service', ['getContactById', 'updateContact', 'deleteContact']);
     const contactSubject = new Subject<Contact>();
-    (mockContactService.getContactById as jasmine.Spy).and.returnValue(contactSubject);
-    (mockContactService.updateContact as jasmine.Spy).and.returnValue(of(true));
-    (mockContactService.deleteContact as jasmine.Spy).and.returnValue(of(true));
+    (fakeContactService.getContactById as jasmine.Spy).and.returnValue(contactSubject);
+    (fakeContactService.updateContact as jasmine.Spy).and.returnValue(of(true));
+    (fakeContactService.deleteContact as jasmine.Spy).and.returnValue(of(true));
 
-    activatedRoute.setParamMap({ id: 1 });
+    activatedRoute.setParamMap({ id: contactIdFromRoute });
 
     TestBed.configureTestingModule({
       declarations: [
         EditContactComponent,
-        MockEnterContactComponent,
+        FakeEnterContactComponent,
       ],
       providers: [
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: activatedRoute },
-        { provide: ContactService, useValue: mockContactService },
+        { provide: ContactService, useValue: fakeContactService },
       ]
     })
       .compileComponents();
@@ -60,21 +61,20 @@ describe('EditContactComponent', () => {
     fixture.detectChanges();
 
     const afterEnterContact = fixture.debugElement.query(By.css('#editContact'));
-    const enterComponent = afterEnterContact.componentInstance as MockEnterContactComponent;
-    expect(hasEnterContactAtStart == null).toBe(true);
+    const enterComponent = afterEnterContact.componentInstance as FakeEnterContactComponent;
+    expect(hasEnterContactAtStart).not.toBeTruthy();
     expect(afterEnterContact).toBeTruthy();
     // verify we pass in the contact to enter contact component
     expect(enterComponent.contact).toBe(newContact);
   });
 
   describe('handles events', () => {
-    let enterContactComponent: MockEnterContactComponent;
+    let enterContactComponent: FakeEnterContactComponent;
 
     beforeEach(() => {
       (component.loadedContact as Subject<Contact>).next(new Contact());
       fixture.detectChanges();
-      enterContactComponent = fixture.debugElement.query(By.css('#editContact')).componentInstance as MockEnterContactComponent;
-
+      enterContactComponent = fixture.debugElement.query(By.css('#editContact')).componentInstance as FakeEnterContactComponent;
     });
 
     it('listens to cancel', () => {
@@ -83,12 +83,17 @@ describe('EditContactComponent', () => {
     });
 
     it('listens to save', () => {
-      enterContactComponent.save.emit(new Contact());
+      const updatedContact = new Contact();
+      enterContactComponent.save.emit(updatedContact);
+
+      expect(updatedContact.id).toBe(contactIdFromRoute);
+      expect(fakeContactService.updateContact).toHaveBeenCalled();
       expect(mockRouter.navigate).toHaveBeenCalled();
     });
 
     it('listens to delete', () => {
       enterContactComponent.delete.emit();
+      expect(fakeContactService.deleteContact).toHaveBeenCalledWith(contactIdFromRoute);
       expect(mockRouter.navigate).toHaveBeenCalled();
     });
   });

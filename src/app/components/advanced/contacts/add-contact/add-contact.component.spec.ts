@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { ActivatedRouteStub } from 'src/app/mocks/activated-route-stub';
-import { MockEnterContactComponent } from 'src/app/mocks/mock-enter-contact-component';
+import { ActivatedRouteStub } from 'src/app/fakes/activated-route-stub';
+import { FakeEnterContactComponent } from 'src/app/fakes/fake-enter-contact-component';
 import { Contact } from 'src/app/models/contact.model';
 
 import { ContactService } from '../../../../services/contact.service';
@@ -28,8 +28,8 @@ describe('AddContactComponent', () => {
         AddContactComponent,
         // from a unit test perspective we only want to handle
         // the contract of EnterContactComponent
-        // we will use a mock so that the real one can't break these tests
-        MockEnterContactComponent,
+        // we will use a fake so that the real one can't break these tests
+        FakeEnterContactComponent,
       ],
       providers: [
         { provide: Router, useValue: mockRouter },

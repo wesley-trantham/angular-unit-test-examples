@@ -8,7 +8,8 @@ import { AddContactComponent } from './components/advanced/contacts/add-contact/
 import { EditContactComponent } from './components/advanced/contacts/edit-contact/edit-contact.component';
 import { EnterContactComponent } from './components/advanced/contacts/enter-contact/enter-contact.component';
 import { SearchContactsComponent } from './components/advanced/contacts/search-contacts/search-contacts.component';
-import { ReactiveFormExampleComponent } from './components/forms/reactive-form-example/reactive-form-example.component';
+import { ReactiveFormExampleComponent } from './components/forms/reactive-form-example-1/reactive-form-example.component';
+import { ReactiveFormExample2Component } from './components/forms/reactive-form-example-2/reactive-form-example.component';
 import { TemplateFormExampleComponent } from './components/forms/template-form-example/template-form-example.component';
 import { ContactService } from './services/contact.service';
 
@@ -17,6 +18,7 @@ import { ContactService } from './services/contact.service';
     AppComponent,
     TemplateFormExampleComponent,
     ReactiveFormExampleComponent,
+    ReactiveFormExample2Component,
     SearchContactsComponent,
     AddContactComponent,
     EditContactComponent,

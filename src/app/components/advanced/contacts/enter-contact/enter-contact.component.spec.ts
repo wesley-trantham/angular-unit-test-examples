@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EnterContactComponent } from './enter-contact.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ContactService } from 'src/app/services/contact.service';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';

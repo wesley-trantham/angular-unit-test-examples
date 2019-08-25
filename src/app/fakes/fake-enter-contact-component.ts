@@ -4,9 +4,9 @@ import { Contact } from '../models/contact.model';
 
 @Component({
   selector: 'app-enter-contact',
-  template: `<div> mock enter contacts component </div>`,
+  template: `<div> fake enter contacts component </div>`,
 })
-export class MockEnterContactComponent {
+export class FakeEnterContactComponent {
   // listed are all public methods that will be used outside of the component
   // any other public items are necessary for the html of the real component
   @Input()

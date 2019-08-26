@@ -17,11 +17,12 @@ describe('EnterContactComponent', () => {
   @Component({
     // here we will have it display the component we're testing
     // we will also hook into the same inputs and outputs
-    template: `<app-enter-contact (save)="onSave($event)" (cancel)="onCancel()" (delete)="onDelete()">
+    template: `<app-enter-contact [contact]="startingContact" (save)="onSave($event)" (cancel)="onCancel()" (delete)="onDelete()">
     </app-enter-contact>`,
   })
   class EnterContactHostComponent {
     savedContact: Contact;
+    startingContact: Contact;
 
     onSave(contact: Contact): void {
       this.savedContact = contact;
@@ -51,12 +52,12 @@ describe('EnterContactComponent', () => {
     // to assign our component
     // we grab the first child element's component instance
     component = fixture.debugElement.children[0].componentInstance;
-    fixture.detectChanges();
   }
 
   describe('create mode', () => {
     beforeEach(() => {
       createComponent();
+      fixture.detectChanges();
     });
 
     it('should create', () => {
@@ -113,6 +114,28 @@ describe('EnterContactComponent', () => {
       // check that the contact's properties were assigned as expected
       expect(savedContact.firstName).toBe('first');
       expect(savedContact.lastName).toBe('last');
+    });
+  });
+
+  describe('edit mode', () => {
+    beforeEach(() => {
+      createComponent();
+    });
+
+    it('should display the populated contact', () => {
+      const editContact = new Contact();
+      editContact.firstName = 'Edit';
+      editContact.id = 123;
+      editContact.lastName = 'Contact';
+      hostComponent.startingContact = editContact;
+
+      fixture.detectChanges(); // calls ngOnInit
+
+      const firstNameInput: HTMLInputElement = fixture.debugElement.query(By.css('#firstNameInput')).nativeElement;
+      const lastNameInput: HTMLInputElement = fixture.debugElement.query(By.css('#lastNameInput')).nativeElement;
+
+      expect(firstNameInput.value).toBe(editContact.firstName);
+      expect(lastNameInput.value).toBe(editContact.lastName);
     });
   });
 });

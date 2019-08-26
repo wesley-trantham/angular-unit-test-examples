@@ -31,6 +31,7 @@ export class EnterContactComponent implements OnInit {
   ngOnInit(): void {
     // if a contact was passed in then we're in edit
     let contactToUse: Contact;
+
     if (!this.contact) {
       contactToUse = new Contact();
     } else {

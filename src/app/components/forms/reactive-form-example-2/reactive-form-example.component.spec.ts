@@ -4,11 +4,13 @@ import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
 import { ReactiveFormExample2Component, SaveService } from './reactive-form-example.component';
+import { DebugElement } from '@angular/core';
 
 describe('ReactiveFormExampleComponent', () => {
   let component: ReactiveFormExample2Component;
   let fixture: ComponentFixture<ReactiveFormExample2Component>;
   let saveServiceTemplate: SaveService;
+  let debugElement: DebugElement;
 
   beforeEach(async(() => {
     saveServiceTemplate = jasmine.createSpyObj<SaveService>('save service', ['saveItem']);
@@ -29,6 +31,7 @@ describe('ReactiveFormExampleComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReactiveFormExample2Component);
     component = fixture.componentInstance;
+    debugElement = fixture.debugElement;
     // the first detectChanges will call onInit in our component
     fixture.detectChanges();
   });
@@ -47,11 +50,11 @@ describe('ReactiveFormExampleComponent', () => {
     const beginningFormValidity = component.exampleForm.valid;
     expect(beginningFormValidity).toBe(false);
 
-    const saveButtonElement = fixture.debugElement.query(By.css('#saveButton'));
+    const saveButtonElement = debugElement.query(By.css('#saveButton'));
     const saveButtonDisabled = saveButtonElement.properties.disabled;
     expect(saveButtonDisabled).toBe(true);
 
-    const someNameElement = fixture.debugElement.query(By.css('#someNameText'));
+    const someNameElement = debugElement.query(By.css('#someNameText'));
     someNameElement.nativeElement.value = 'updated value';
     // this is what informs that we've updated the text value
     // the form otherwise will not detect that we've directly set the value
@@ -67,7 +70,7 @@ describe('ReactiveFormExampleComponent', () => {
     const saveButtonDisabledAfterUpdate = saveButtonElement.properties.disabled;
     expect(saveButtonDisabledAfterUpdate).toBe(false);
 
-    const checkBoxElement = fixture.debugElement.query(By.css('#hasCheckBox'));
+    const checkBoxElement = debugElement.query(By.css('#hasCheckBox'));
     checkBoxElement.nativeElement.click();
 
     // because we're getting values directly from the form we do not need to
@@ -83,7 +86,7 @@ describe('ReactiveFormExampleComponent', () => {
     const saveButtonDisabledDuringSave = saveButtonElement.properties.disabled;
     expect(saveButtonDisabledDuringSave).toBe(true);
 
-    const saveSuccessfulDivElementDuringSave = fixture.debugElement.query(By.css('#saveSuccessfulDiv'));
+    const saveSuccessfulDivElementDuringSave = debugElement.query(By.css('#saveSuccessfulDiv'));
     expect(saveSuccessfulDivElementDuringSave == null).toBe(true);
 
     // complete the api save by giving the subject a value
@@ -92,7 +95,7 @@ describe('ReactiveFormExampleComponent', () => {
     const saveButtonDisabledAfterSuccessfulSave = saveButtonElement.properties.disabled;
     expect(saveButtonDisabledAfterSuccessfulSave).toBe(false);
 
-    const saveSuccessfulDivElementAfterSave = fixture.debugElement.query(By.css('#saveSuccessfulDiv'));
+    const saveSuccessfulDivElementAfterSave = debugElement.query(By.css('#saveSuccessfulDiv'));
     expect(saveSuccessfulDivElementAfterSave).toBeTruthy();
   });
 });

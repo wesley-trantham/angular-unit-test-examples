@@ -3,10 +3,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { ReactiveFormExampleComponent } from './reactive-form-example.component';
+import { DebugElement } from '@angular/core';
 
 describe('ReactiveFormExampleComponent', () => {
   let component: ReactiveFormExampleComponent;
   let fixture: ComponentFixture<ReactiveFormExampleComponent>;
+  let debugElement: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,7 +22,9 @@ describe('ReactiveFormExampleComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReactiveFormExampleComponent);
     component = fixture.componentInstance;
+    debugElement = fixture.debugElement;
     // the first detectChanges will call onInit in our component
+
     fixture.detectChanges();
   });
 
@@ -31,10 +35,10 @@ describe('ReactiveFormExampleComponent', () => {
   it('should allow saving values when form is valid', () => {
     const beginningFormValidity = component.exampleForm.valid;
 
-    const saveButtonElement = fixture.debugElement.query(By.css('#saveButton'));
+    const saveButtonElement = debugElement.query(By.css('#saveButton'));
     const saveButtonDisabled = saveButtonElement.properties.disabled;
 
-    const someNameElement = fixture.debugElement.query(By.css('#someNameText'));
+    const someNameElement = debugElement.query(By.css('#someNameText'));
     someNameElement.nativeElement.value = 'updated value';
     // this is what informs that we've updated the text value
     // the form otherwise will not detect that we've directly set the value
@@ -48,7 +52,7 @@ describe('ReactiveFormExampleComponent', () => {
     // before it would have had the status as of the previous detectChanges (in beforeEach)
     const saveButtonDisabledAfterUpdate = saveButtonElement.properties.disabled;
 
-    const checkBoxElement = fixture.debugElement.query(By.css('#hasCheckBox'));
+    const checkBoxElement = debugElement.query(By.css('#hasCheckBox'));
     checkBoxElement.nativeElement.click();
 
     // because we're getting values directly from the form we do not need to
@@ -67,7 +71,7 @@ describe('ReactiveFormExampleComponent', () => {
   });
 
   it('should not save when required field is empty', () => {
-    const saveButtonElement = fixture.debugElement.query(By.css('#saveButton'));
+    const saveButtonElement = debugElement.query(By.css('#saveButton'));
     saveButtonElement.nativeElement.click();
     expect(component.savedValue).toBeFalsy();
   });

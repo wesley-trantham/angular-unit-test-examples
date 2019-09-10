@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EnterContactComponent } from './enter-contact.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { Component } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';
 
 describe('EnterContactComponent', () => {
@@ -105,6 +105,62 @@ describe('EnterContactComponent', () => {
 
       // allow the button to update to not be disabled
       fixture.detectChanges();
+
+      saveButtonHtmlElement.click();
+
+      // check that saveContact is an instance of an object
+      const savedContact = hostComponent.savedContact;
+      expect(savedContact).toBeTruthy();
+      // check that the contact's properties were assigned as expected
+      expect(savedContact.firstName).toBe('first');
+      expect(savedContact.lastName).toBe('last');
+    });
+  });
+
+  describe('create mode cleaned up', () => {
+    let firstNameInput: HTMLInputElement;
+    let lastNameInput: HTMLInputElement;
+    let saveButtonElement: DebugElement;
+    let saveButtonHtmlElement: HTMLButtonElement;
+    let debugElement: DebugElement;
+    beforeEach(() => {
+      createComponent();
+      fixture.detectChanges();
+      debugElement = fixture.debugElement;
+      firstNameInput = debugElement.query(By.css('#firstNameInput')).nativeElement;
+      lastNameInput = debugElement.query(By.css('#lastNameInput')).nativeElement;
+      saveButtonElement = debugElement.query(By.css('#saveButton'));
+      saveButtonHtmlElement = saveButtonElement.nativeElement;
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+      // any default expects we can also put here
+      const deleteButton = debugElement.query(By.css('#deleteButton'));
+      expect(deleteButton === null).toBe(true, 'Delete button only shows for edit mode');
+    });
+
+    function setInputs(firstName: string, lastName: string) {
+      firstNameInput.value = firstName;
+      firstNameInput.dispatchEvent(new Event('input'));
+      lastNameInput.value = lastName;
+      lastNameInput.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+    }
+
+    it('should not allow save if form invalid', () => {
+      const buttonSaveInitialDisabled = saveButtonElement.properties.disabled;
+
+      setInputs('first', 'last');
+
+      const buttonSaveDisabledWithBothSet = saveButtonElement.properties.disabled;
+
+      expect(buttonSaveInitialDisabled).toBe(true);
+      expect(buttonSaveDisabledWithBothSet).toBe(false);
+    });
+
+    it('should send contact on save click', () => {
+      setInputs('first', 'last');
 
       saveButtonHtmlElement.click();
 

@@ -6,21 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./template-form-example.component.css']
 })
 export class TemplateFormExampleComponent implements OnInit {
-  someText: string;
-  clickHappened = false;
+  billingAddress: string;
+  shippingAddress: string;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  isValid(): boolean {
-    return !!this.someText && this.someText.length > 0;
-  }
-
-  onClick(): void {
-    if (this.isValid()) {
-      this.clickHappened = true;
-    }
+  onCopyClick(): void {
+    this.shippingAddress = this.billingAddress;
   }
 }

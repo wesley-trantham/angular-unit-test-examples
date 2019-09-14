@@ -3,10 +3,12 @@ import { By } from '@angular/platform-browser';
 
 import { TemplateFormExampleComponent } from './template-form-example.component';
 import { FormsModule } from '@angular/forms';
+import { DebugElement } from '@angular/core';
 
 describe('TemplateFormExampleComponent', () => {
   let component: TemplateFormExampleComponent;
   let fixture: ComponentFixture<TemplateFormExampleComponent>;
+  let debugElement: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,6 +24,7 @@ describe('TemplateFormExampleComponent', () => {
     fixture = TestBed.createComponent(TemplateFormExampleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    debugElement = fixture.debugElement;
   });
 
   it('should create', () => {
@@ -32,25 +35,20 @@ describe('TemplateFormExampleComponent', () => {
   it('should update template form value', async () => {
     // this works because the id in the html is templateFormInput
     // notice we put a # in front - which is a css syntax for id
-    const templateFormDebugElement = fixture.debugElement.query(By.css('#templateFormInput'));
-
+    const billingInput = debugElement.query(By.css('#billingAddress'));
     // set the value of the textbox in the html
-    templateFormDebugElement.nativeElement.value = 'updated value';
+    billingInput.nativeElement.value = 'updated value';
     // necessary to let the form know it has been changed
-    templateFormDebugElement.nativeElement.dispatchEvent(new Event('input'));
-
+    billingInput.nativeElement.dispatchEvent(new Event('input'));
     // to see how the html has changed we need to detect changes
+    const copyButton = debugElement.query(By.css('#copyButton'));
+    copyButton.nativeElement.click();
+
     fixture.detectChanges();
-    // while this example works without whenStable
-    // template forms are async, so there are occasions when you need it
     await fixture.whenStable();
+    fixture.detectChanges();
 
-    const updatedDiv = fixture.debugElement.query(By.css('#divValue'));
-    expect(updatedDiv.nativeElement.innerText).toBe('updated value');
-
-    const saveButton = fixture.debugElement.query(By.css('#saveButton'));
-    saveButton.nativeElement.click();
-
-    expect(component.clickHappened).toBe(true);
+    const shippingInput = debugElement.query(By.css('#shippingAddress'));
+    expect(shippingInput.nativeElement.value).toBe('updated value');
   });
 });

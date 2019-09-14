@@ -1,6 +1,6 @@
 <div>
-  <input id="templateFormInput" type="text" [(ngModel)]="someText">
-  <div id="divValue">{{someText}}</div>
+  <input id="billingAddress" type="text" required [(ngModel)]="billingAddress">
+  <input id="shippingAddress" type="text" required [(ngModel)]="shippingAddress">
 
-  <button id="saveButton" [disabled]="!isValid()" (click)="onClick()">Click Me</button>
+  <button id="copyButton" (click)="onCopyClick()">Same As Billing</button>
 </div>

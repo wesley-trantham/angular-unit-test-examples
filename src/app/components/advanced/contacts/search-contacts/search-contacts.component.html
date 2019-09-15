@@ -3,6 +3,7 @@
     <button (click)="onAddContactClick()">Add Contact</button>
   </div>
   <input id="searchInputId" [formControl]="searchInput">
+  <input id="searchArchivedId" type="checkbox" [formControl]="searchArchivedContacts">
 
   <div *ngIf="searchResults | async as searchResults; else loading">
     <table id="resultsTableId">

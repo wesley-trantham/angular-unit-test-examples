@@ -13,6 +13,7 @@ import { ContactService } from 'src/app/services/contact.service';
 })
 export class SearchContactsComponent implements OnInit {
   searchInput = new FormControl('');
+  searchArchivedContacts = new FormControl(false);
   searchResults: Observable<Contact[]>;
 
   constructor(
@@ -31,7 +32,7 @@ export class SearchContactsComponent implements OnInit {
         // we will do a switchMap
         // the switchMap will also cancel any outstanding call when you make a new one
         switchMap(searchInput => {
-          return this.contactService.searchContacts(searchInput);
+          return this.contactService.searchContacts(searchInput, this.searchArchivedContacts.value);
         })
       );
   }

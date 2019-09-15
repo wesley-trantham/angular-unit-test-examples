@@ -9,7 +9,7 @@ import { debounceTime, debounce, delay } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ContactService {
-  searchContacts(searchInput: string): Observable<Contact[]> {
+  searchContacts(searchInput: string, searchArchived: boolean): Observable<Contact[]> {
     // here we would make an http call to our api
     // the api would then return a list of contacts
     // any property mappings necessary would be done here instead of in a component
@@ -63,7 +63,7 @@ export class ContactService {
 
   updateContact(contact: Contact): Observable<boolean> {
 
-      return of(true).pipe(delay(1000));
+    return of(true).pipe(delay(1000));
   }
 
   deleteContact(contactId: number): Observable<boolean> {

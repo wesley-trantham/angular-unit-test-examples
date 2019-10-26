@@ -85,6 +85,15 @@ describe('EnterContactComponent', () => {
       expect(buttonSaveDisabledWithBothSet).toBe(false);
     });
 
+    it('should require required fields', () => {
+      setInputs('first', '');
+      expect(saveButtonElement.properties.disabled).toBe(true, 'last name should be required');
+      setInputs('', 'last');
+      expect(saveButtonElement.properties.disabled).toBe(true, 'first name should be required');
+      setInputs('first', 'last');
+      expect(saveButtonElement.properties.disabled).toBe(false);
+    });
+
     it('should send contact on save click', () => {
       setInputs('first', 'last');
 

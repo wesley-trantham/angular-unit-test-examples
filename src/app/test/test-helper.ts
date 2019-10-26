@@ -10,6 +10,4 @@ export class TestHelper {
     const input: HTMLInputElement = fixture.debugElement.query(By.css(elementSelector)).nativeElement;
     return input;
   }
-
 }
-

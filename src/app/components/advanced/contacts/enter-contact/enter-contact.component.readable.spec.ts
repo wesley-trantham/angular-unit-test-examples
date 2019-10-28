@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { Component, DebugElement } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';
 import { TestHelper } from 'src/app/test/test-helper';
+import { ContactGenerator } from 'src/app/test/contact.generator';
 
 describe('EnterContactComponent', () => {
   let component: EnterContactComponent;
@@ -116,16 +117,8 @@ describe('EnterContactComponent', () => {
       assignHtmlElements();
     });
 
-    function getEditContact(): Contact {
-      editContact = new Contact();
-      editContact.firstName = 'Edit';
-      editContact.id = 123;
-      editContact.lastName = 'Contact';
-      return editContact;
-    }
-
     function assignEdit(): void {
-      editContact = getEditContact();
+      editContact = ContactGenerator.getDefaultContact();
       hostComponent.startingContact = editContact;
       fixture.detectChanges(); // calls ngOnInit
     }

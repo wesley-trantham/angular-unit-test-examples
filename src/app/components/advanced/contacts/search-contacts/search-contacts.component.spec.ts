@@ -61,8 +61,7 @@ describe('SearchContactsComponent', () => {
     fixture.detectChanges();
 
     const resultsTableElement = debugElement.query(By.css('#resultsTableId'));
-    const tableBodyElement = resultsTableElement.children[0];
-    expect(tableBodyElement.children.length).toBe(0);
+    expect(resultsTableElement.children.length).toBe(0);
     expect(fakeContactService.searchContacts).toHaveBeenCalled();
   });
 
@@ -80,9 +79,7 @@ describe('SearchContactsComponent', () => {
     fixture.detectChanges();
 
     const resultsTableElement = debugElement.query(By.css('#resultsTableId'));
-    const tableBodyElement = resultsTableElement.children[0];
-    expect(tableBodyElement.children.length).toBe(2);
-    const firstRow = tableBodyElement.children[0];
+    const firstRow = resultsTableElement.children[0];
     const firstTd: HTMLTableCellElement = firstRow.children[0].nativeElement;
     const secondTd: HTMLTableCellElement = firstRow.children[1].nativeElement;
     expect(firstTd.innerText).toBe('first 0');
